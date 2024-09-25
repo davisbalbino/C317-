@@ -1,0 +1,69 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Jaldi", sans-serif;
+}
+.login-container{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-logo{
+    width: 60%;
+    height: 100%;
+    background-color: #64C7FF;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+}
+
+.login-logo img{
+    width: 50%;
+    height: auto;
+    background-color: #64C7FF;
+}
+
+.login-logo h1{
+    width: 100%;;
+    font-size: xx-large;
+    text-align: center;
+    margin: 0;
+}
+
+.login-form{
+    width: 40%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+
+.login-form h1{ 
+    width: 100%;
+    color: #64C7FF;
+    text-align: center;
+    font-size: 3rem;
+    text-shadow: 0 4px 4px #7d7d7d; 
+}
+.login-credentials{
+    height: 30%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+}
+
+.login-submit{
+    width: 80%;
+    height: 30%;
+}
+

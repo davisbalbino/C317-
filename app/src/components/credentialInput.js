@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './css/credentials.css'
 
-const CredentialInput = ({ label, onChange }) => {
+const CredentialInput = ({ label, onChange, type="text" }) => {
   const [value, setValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -14,7 +14,7 @@ const CredentialInput = ({ label, onChange }) => {
       {label && <label className="input-label">{label}</label>}
       <input
         className="custom-input"
-        type="text"
+        type={type}
         value={value}
         onChange={handleInputChange}
       />

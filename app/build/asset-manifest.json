@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/C317-/static/css/main.abaaae47.css",
+    "main.js": "/C317-/static/js/main.945fde06.js",
+    "static/js/453.a6a97343.chunk.js": "/C317-/static/js/453.a6a97343.chunk.js",
+    "static/media/capitalis-logo.png": "/C317-/static/media/capitalis-logo.2c31f2d29d1236afe5c8.png",
+    "index.html": "/C317-/index.html",
+    "main.abaaae47.css.map": "/C317-/static/css/main.abaaae47.css.map",
+    "main.945fde06.js.map": "/C317-/static/js/main.945fde06.js.map",
+    "453.a6a97343.chunk.js.map": "/C317-/static/js/453.a6a97343.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.abaaae47.css",
+    "static/js/main.945fde06.js"
+  ]
+}

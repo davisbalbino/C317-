@@ -1,7 +1,7 @@
 import os
 import sys
 
-BASEDIR = os.path.dirname(os.path.abspath("main.py"))
+BASEDIR = os.path.dirname(os.path.abspath("../main.py"))
 
 STATIC_FOLDER = os.path.join(sys._MEIPASS, "static") if getattr(sys, "frozen", False) else "static"
 TEMPLATE_FOLDER = os.path.join(sys._MEIPASS, "templates") if getattr(sys, "frozen", False) else "templates"
@@ -17,6 +17,6 @@ class Config:
             usuario='root',
             senha='admin',
             servidor='localhost',
-            database='olympic'
+            database='capitalis'
         )
     SQLALCHEMY_TRACK_MODIFICATIONS = False

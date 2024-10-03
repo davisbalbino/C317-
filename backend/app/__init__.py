@@ -1,7 +1,7 @@
 from flask import Flask
 from backend.app.config import Config
 from backend.app.extensions import db, migrate, api
-from backend.app.users.rotes import UserResource
+from backend.app.users.routes import UserResource
 
 
 def create_app(config_class=Config):
@@ -11,6 +11,9 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     api.init_app(app)
-    api.add_resource(UserResource, '/users')
+
+    with app.app_context():
+        print("Registered routes:")
+        print(app.url_map)
 
     return app

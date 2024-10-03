@@ -1,7 +1,8 @@
 from flask import request
 from flask_restful import Resource
 from backend.app.users.model import User
-from backend.app.extensions import db
+from backend.app.extensions import db, api
+
 
 class UserResource(Resource):
     def get(self):
@@ -36,3 +37,5 @@ class UserResource(Resource):
         db.session.commit()
 
         return new_user.to_dict(), 201
+
+api.add_resource(UserResource, '/users')

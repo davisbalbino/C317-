@@ -1,69 +1,159 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family: "Jaldi", sans-serif;
-}
-.login-container{
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-}
-
-.login-logo{
-    width: 60%;
-    height: 100%;
-    background-color: #64C7FF;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10%;
-}
-
-.login-logo img{
-    width: 50%;
-    height: auto;
-    background-color: #64C7FF;
-}
-
-.login-logo h1{
-    width: 100%;;
-    font-size: xx-large;
-    text-align: center;
-    margin: 0;
-}
-
-.login-form{
-    width: 40%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+@media(min-width: 768px){
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: "Jaldi", sans-serif;
+    }
+    .login-container{
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+    }
     
+    .login-logo{
+        width: 60%;
+        height: 100%;
+        background-color: #64C7FF;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10%;
+    }
+    
+    .login-logo img{
+        width: 50%;
+        height: auto;
+        background-color: #64C7FF;
+    }
+    
+    .login-logo h1{
+        width: 100%;;
+        font-size: xx-large;
+        text-align: center;
+        margin: 0;
+    }
+    
+    .login-form{
+        width: 40%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        
+    }
+    
+    
+    .login-form h1{ 
+        width: 100%;
+        color: #64C7FF;
+        text-align: center;
+        font-size: 3rem;
+        text-shadow: 0 4px 4px #7d7d7d; 
+    }
+    .login-credentials{
+        height: 30%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 5%;
+    }
+    
+    .login-submit{
+        width: 80%;
+        height: 30%;
+    }
+        
 }
 
+@media (max-width: 767px) {
 
-.login-form h1{ 
-    width: 100%;
-    color: #64C7FF;
-    text-align: center;
-    font-size: 3rem;
-    text-shadow: 0 4px 4px #7d7d7d; 
-}
-.login-credentials{
-    height: 30%;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 5%;
-}
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: "Jaldi", sans-serif;
+    }
+    .login-container{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+    }
+    
+    
+    .login-logo {
+        position: absolute;      /* Permite que a logo se posicione livremente na tela */
+        top: 0;                  /* Alinha a logo ao topo da tela */
+        left: 0;                 /* Alinha a logo à esquerda da tela */
+        width: 100%;             /* O logo ocupa 100% da largura do container */
+        height: 100%;            /* O logo ocupa 100% da altura do container */
+        background-color: #64C7FF; /* Cor de fundo azul */
+        display: flex;           /* Usa flexbox para layout */
+        flex-direction: column;  /* Alinha os itens em coluna */
+        align-items: center;     /* Centraliza os itens horizontalmente */
+        justify-content: center;  /* Centraliza os itens verticalmente */
+        gap: 10%;                /* Espaçamento entre os itens */
+        z-index: -1;            /* Coloca a logo atrás dos outros elementos */
+    }
+    
+    .login-logo img {
+        margin-top: 10%;
+        margin-right: 100%;
+        width: auto;             /* A imagem ocupa 100% da largura do logo */
+        height: 100%;            /* A altura é ajustada automaticamente */
+        opacity: 0.5;          /* Ajuste a opacidade aqui (0.8 = 80% visível) */
+        
+    }
+    
+    .login-logo h1 {
+        width: 100%;             /* O título ocupa 100% da largura do logo */
+        font-size: 2rem;         /* Ajuste do tamanho da fonte para ser mais responsivo */
+        text-align: center;
+        margin: 0;
+        color: white;      
+        display: none;      /* Cor do texto da logo */
+    }
+    
+    .login-form {
+        position: absolute;
+        height: 100%; 
+        width: 100%;              /* O form ocupa 80% da largura do container */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 10px;    /* Bordas arredondadas */
+        z-index: 1;             /* Coloca o formulário acima da logo */
+    }
+    
+    .login-form h1 {  /* Capitalis */
+        width: 100%;
+        color: white;        /* Cor do texto do formulário */
+        text-align: center;
+        font-size: 3rem;      /* Ajuste do tamanho da fonte */
+        text-shadow: 0 4px 4px #7d7d7d; 
+    
+    }
+    
+    
+    .login-credentials { /* caixa de texto de email e senha*/
+        height: 50%;           /* Altura automática para caber o conteúdo */
+        width: 80%;             /* Largura da seção de credenciais */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5%;
+    }
+    
+    .login-submit {
+        width: 80%;             /* A largura do botão de submissão */
+        height: auto;           /* Definição de uma altura fixa para o botão */
+    }
 
-.login-submit{
-    width: 80%;
-    height: 30%;
 }
-

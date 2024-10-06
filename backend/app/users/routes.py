@@ -5,9 +5,15 @@ from backend.app.extensions import db, api
 
 
 class UserResource(Resource):
-    def get(self):
-        users = User.query.all()
-        return [user.to_dict() for user in users], 200
+    def get(self, user_id=None):
+        if user_id:
+            user = User.query.get(user_id)
+            if not user:
+                return {"error": "User not found"}, 404
+            return user.to_dict(), 200
+        else:
+            users = User.query.all()
+            return [user.to_dict() for user in users], 200
 
     def post(self):
         data = request.json
@@ -38,4 +44,33 @@ class UserResource(Resource):
 
         return new_user.to_dict(), 201
 
-api.add_resource(UserResource, '/users')
+    def put(self, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "User not found"}, 404
+
+        data = request.json
+        user.name = data.get('name', user.name)
+        user.phone_number = data.get('phone_number', user.phone_number)
+        user.email = data.get('email', user.email)
+        user.role = data.get('role', user.role)
+        user.is_adm = data.get('is_adm', user.is_adm)
+
+        if 'password' in data:
+            user.set_password(data['password'])
+
+        db.session.commit()
+
+        return user.to_dict(), 200
+
+    def delete(self, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "User not found"}, 404
+
+        db.session.delete(user)
+        db.session.commit()
+
+        return {"message": "User deleted"}, 200
+
+api.add_resource(UserResource, '/users', '/users/<int:user_id>')

@@ -12,8 +12,4 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     api.init_app(app)
 
-    with app.app_context():
-        print("Registered routes:")
-        print(app.url_map)
-
     return app

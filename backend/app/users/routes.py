@@ -5,9 +5,9 @@ from backend.app.extensions import db, api
 
 
 class UserResource(Resource):
-    def get(self, user_id=None):
-        if user_id:
-            user = User.query.get(user_id)
+    def get(self, id=None):
+        if id:
+            user = User.query.get(id)
             if not user:
                 return {"error": "User not found"}, 404
             return user.to_dict(), 200
@@ -44,8 +44,8 @@ class UserResource(Resource):
 
         return new_user.to_dict(), 201
 
-    def put(self, user_id):
-        user = User.query.get(user_id)
+    def put(self, id):
+        user = User.query.get(id)
         if not user:
             return {"error": "User not found"}, 404
 
@@ -63,8 +63,8 @@ class UserResource(Resource):
 
         return user.to_dict(), 200
 
-    def delete(self, user_id):
-        user = User.query.get(user_id)
+    def delete(self, id):
+        user = User.query.get(id)
         if not user:
             return {"error": "User not found"}, 404
 
@@ -73,4 +73,4 @@ class UserResource(Resource):
 
         return {"message": "User deleted"}, 200
 
-api.add_resource(UserResource, '/users', '/users/<int:user_id>')
+api.add_resource(UserResource, '/users', '/users/<int:id>')

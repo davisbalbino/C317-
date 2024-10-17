@@ -8,6 +8,7 @@ const Menu = ({page,set}) => {
 
   return (
     <div className="menu-container">
+        
         <div className="container-title">
             <span>Menu</span>
         </div>

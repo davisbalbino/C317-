@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/C317-/static/css/main.59e258fa.css",
-    "main.js": "/C317-/static/js/main.e1fe1b9d.js",
+    "main.css": "/C317-/static/css/main.61026cef.css",
+    "main.js": "/C317-/static/js/main.acc0321d.js",
     "static/js/453.a6a97343.chunk.js": "/C317-/static/js/453.a6a97343.chunk.js",
     "static/media/capitalis-logo.png": "/C317-/static/media/capitalis-logo.2c31f2d29d1236afe5c8.png",
+    "static/media/user.jpeg": "/C317-/static/media/user.12bf92d9b7073ef743cb.jpeg",
     "index.html": "/C317-/index.html",
-    "main.59e258fa.css.map": "/C317-/static/css/main.59e258fa.css.map",
-    "main.e1fe1b9d.js.map": "/C317-/static/js/main.e1fe1b9d.js.map",
+    "main.61026cef.css.map": "/C317-/static/css/main.61026cef.css.map",
+    "main.acc0321d.js.map": "/C317-/static/js/main.acc0321d.js.map",
     "453.a6a97343.chunk.js.map": "/C317-/static/js/453.a6a97343.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.59e258fa.css",
-    "static/js/main.e1fe1b9d.js"
+    "static/css/main.61026cef.css",
+    "static/js/main.acc0321d.js"
   ]
 }

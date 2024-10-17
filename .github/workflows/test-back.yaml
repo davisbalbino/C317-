@@ -22,12 +22,11 @@ jobs:
       - 
         name: "Install newman reporter"
         run: "npm install -g newman-reporter-htmlextra"
-      - 
-        name: "Run tests"
-        run: "newman run Captalis-API.postman_collection.json -e api-c317.postman_environment.json -r htmlextra --reporter-htmlextra-export htmlreport.html --reporter-htmlextra-darkTheme > runreport1.html"
+       
+      - name: "Run tests"
+        run: "newman run Captalis-API.postman_collection.json -e api-c317.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export htmlreport.html --reporter-htmlextra-darkTheme > runreport1.html"
       
-      - 
-        name: "Upload test report"
+      - name: "Upload test report"
         uses: actions/upload-artifact@v3
         with: 
           name: test-report

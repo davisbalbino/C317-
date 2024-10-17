@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "ef09ad30-88ef-4a46-8f99-4ea5a4d754d0",
+		"name": "Captalis-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31336119"
+	},
+	"item": [
+		{
+			"name": "/users",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "validando a criação de um novo usuário",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar um número aleatório",
+											"function getRandomInt(min, max) {",
+											"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+											"}",
+											"",
+											"// Gerar nome aleatório",
+											"const firstNames = [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"Eva\"];",
+											"const lastNames = [\"Smith\", \"Johnson\", \"Williams\", \"Brown\", \"Jones\"];",
+											"const randomFirstName = firstNames[getRandomInt(0, firstNames.length - 1)];",
+											"const randomLastName = lastNames[getRandomInt(0, lastNames.length - 1)];",
+											"const name = `${randomFirstName} ${randomLastName}`;",
+											"",
+											"// Gerar e-mail aleatório",
+											"const email = `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}${getRandomInt(1, 100)}@example.com`;",
+											"",
+											"// Gerar número de telefone aleatório",
+											"const phoneNumber = `+1${getRandomInt(100000000, 999999999)}`;",
+											"",
+											"// Definir função ou role aleatória",
+											"const roles = [\"user\", \"admin\"];",
+											"const role = roles[getRandomInt(0, roles.length - 1)];",
+											"",
+											"// Gerar valor booleano para 'is_adm'",
+											"const isAdm = role === \"admin\" ? true : false;",
+											"",
+											"// Gerar senha aleatória",
+											"const password = `Password${getRandomInt(100, 999)}`;",
+											"",
+											"// Salvar dados gerados como variáveis de ambiente para uso na requisição",
+											"pm.environment.set(\"name\", name);",
+											"pm.environment.set(\"email\", email);",
+											"pm.environment.set(\"phone_number\", phoneNumber);",
+											"pm.environment.set(\"role\", role);",
+											"pm.environment.set(\"is_adm\", isAdm);",
+											"pm.environment.set(\"password\", password);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Testar o status da resposta",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Testar se a resposta contém os campos esperados",
+											"pm.test(\"Response contains all expected fields\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"id\");",
+											"    pm.expect(jsonData).to.have.property(\"name\");",
+											"    pm.expect(jsonData).to.have.property(\"phone_number\");",
+											"    pm.expect(jsonData).to.have.property(\"email\");",
+											"    pm.expect(jsonData).to.have.property(\"role\");",
+											"    pm.expect(jsonData).to.have.property(\"is_adm\");",
+											"});",
+											"",
+											"// Testar se os dados retornados correspondem aos enviados",
+											"pm.test(\"Response data matches the input data\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"name\"));",
+											"    pm.expect(jsonData.phone_number).to.eql(pm.environment.get(\"phone_number\"));",
+											"    pm.expect(jsonData.email).to.eql(pm.environment.get(\"email\"));",
+											"    pm.expect(jsonData.role).to.eql(pm.environment.get(\"role\"));",
+											"    pm.expect(jsonData.is_adm).to.eql(pm.environment.get(\"is_adm\"));",
+											"});",
+											"",
+											"// Testar o formato do e-mail",
+											"pm.test(\"Email format is valid\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.email).to.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{name}}\",\n    \"phone_number\": \"{{phone_number}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\",\n    \"is_adm\": {{is_adm}}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "erro de e-mail duplicado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should return error when email is already in use\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"error\", \"Email already in use\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"User One\",\n    \"phone_number\": \"+123456789\",\n    \"email\": \"duplicate@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"user\",\n    \"is_adm\": false\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "verificando o erro de dados ausentes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should return error when data is missing\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"error\", \"Missing data\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test.user@example.com\",\n    \"password\": \"securePassword123\",\n    \"role\": \"user\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "validando a /users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response contains users\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an('array');",
+											"    pm.expect(jsonData.length).to.be.above(0);",
+											"});",
+											"",
+											"const jsonData = pm.response.json();",
+											"if (jsonData.length > 0) {",
+											"    const firstUserId = jsonData[0].id;",
+											"    pm.environment.set(\"userId\", firstUserId);",
+											"    console.log(\"User ID set to: \" + firstUserId);",
+											"} else {",
+											"    console.log(\"No users available to delete.\");",
+											"}",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get /users/{{userId}}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"User ID matches the stored userId\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const storedUserId = pm.environment.get(\"userId\");",
+											"    pm.expect(jsonData.id).to.eql(parseInt(storedUserId, 10));",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "atualizando um usuário com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response contains updated fields\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"name\", \"Updated User\");",
+											"    pm.expect(jsonData).to.have.property(\"phone_number\", \"+111111111\");",
+											"    pm.expect(jsonData).to.have.property(\"email\", \"updated.user@example.com\");",
+											"    pm.expect(jsonData).to.have.property(\"role\", \"admin\");",
+											"    pm.expect(jsonData).to.have.property(\"is_adm\", true);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Updated User\",\n    \"phone_number\": \"+111111111\",\n    \"email\": \"updated.user@example.com\",\n    \"role\": \"admin\",\n    \"is_adm\": true,\n    \"password\": \"newpassword123\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "atualizar um usuário que não existe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should return 404 when user is not found\", function () {",
+											"    pm.response.to.have.status(404);",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"error\", \"User not found\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Non-existent User\",\n    \"phone_number\": \"+222222222\",\n    \"email\": \"non.existent@example.com\",\n    \"role\": \"user\",\n    \"is_adm\": false\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users/100000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"100000"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletar um usuário com sucesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response should confirm user deletion\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"message\", \"User deleted\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "e um usuário não existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should return 404 when user is not found\", function () {",
+											"    pm.response.to.have.status(404);",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property(\"error\", \"User not found\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/999999",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,4 +1,4 @@
-name: CQC API
+name: Captalis API
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
         run: sudo npm install -g newman-reporter-htmlextra
         
       - name: Step 3 - Execute collection
-        run: newman run ./testes/back-end/Captalis-API.postman_collection.json ./testes/back-end/api-c317.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./results/Report.html
+        run: newman run ./testes/back-end/Captalis-API.postman_collection.json -e ./testes/back-end/api-c317.postman_environment.json --reporters cli,htmlextra --reporter-htmlextra-export ./results/Report.html
    
       - name: Step 4 - Archive production artifacts
         uses: actions/upload-artifact@v3

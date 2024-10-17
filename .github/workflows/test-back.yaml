@@ -28,7 +28,7 @@ jobs:
         run: newman run ./testes/back-end/Captalis-API.postman_collection.json ./testes/back-end/api-c317.postman_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./results/Report.html
    
       - name: Step 4 - Archive production artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: report
             path: ./results/Report.html

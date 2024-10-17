@@ -55,7 +55,7 @@ const Login = () =>{
     <div className="login-container">
         <div className="login-logo">
             <img alt="Logo Capitalis" src = {logo}/>
-            <h1>Aqui você faz a diferença</h1>
+            <h1>Metificando a Felicidade</h1>
         </div>
         <div className="login-form">
             <h1>

@@ -1,6 +1,9 @@
 import React from "react";
 import './css/dashboard.css';
 import Sign from "./sign";
+import Search from "./search";
+import SearchAnswer from "./searchAswer";
+
 
 const Dashboard = ({title}) => {
   return (
@@ -10,6 +13,8 @@ const Dashboard = ({title}) => {
         </div>
         <div className="dashboard-content">
             {title=='Cadastro de Colaborador'?<Sign/>:<></>}
+            {title=='Criar Pesquisas'?<Search/>:<></>}
+            {title == 'Pesquisas a Responder'? <SearchAnswer/>:<></>}
         </div>
 
     </div>

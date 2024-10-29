@@ -21,18 +21,47 @@ const Login = () =>{
 
     const navigate = useNavigate()
 
-    const handleSubmit = (e) =>{
-        if(email === userTeste.email && password === userTeste.password){
-            navigate('/homepage')
-        }else(
+    const handleSubmit = async(e) =>{
+        try {
+            const response = await fetch('http://127.0.0.1:5000/users', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+            });
+      
+            if (response.ok) {
+              let data = await response.json();
+              console.log(data)
+              data = data.filter(item => item.email == email)
+              console.log(data)
+              if (data.length >0){
+                navigate('/homepage')
+              }else{
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Credenciais inválidas",
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+              }
+            } else {
+              alert('Erro ao fazer solicitação');
+            }
+          } catch (error) {
+            alert('Erro na requisição:', error);
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Credenciais inválidas",
+                title: "Erro ao fazer a solicitação",
                 showConfirmButton: false,
                 timer: 1500
               })
-        )
+          }
+        if(email === userTeste.email && password === userTeste.password){
+            navigate('/homepage')
+        }
         
     }
 

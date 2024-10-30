@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import './css/multiple.css';
+
 
 const TextField = ({ onUpdate }) => {
   const [title, setTitle] = useState("");
@@ -15,6 +17,7 @@ const TextField = ({ onUpdate }) => {
         placeholder="Título da pergunta de campo de texto" 
         value={title} 
         onChange={handleTitleChange} 
+        className="search-title"
       />
     </div>
   );

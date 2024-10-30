@@ -10,6 +10,100 @@
 			"name": "/users",
 			"item": [
 				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "validando a /users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response contains users\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an('array');",
+											"    pm.expect(jsonData.length).to.be.above(0);",
+											"});",
+											"",
+											"const jsonData = pm.response.json();",
+											"if (jsonData.length > 0) {",
+											"    const firstUserId = jsonData[0].id;",
+											"    pm.environment.set(\"userId\", firstUserId);",
+											"    console.log(\"User ID set to: \" + firstUserId);",
+											"} else {",
+											"    console.log(\"No users available to delete.\");",
+											"}",
+											"",
+											"pm.execution.setNextRequest(\"get /users/{{userId}}\")",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get /users/{{userId}}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"User ID matches the stored userId\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const storedUserId = pm.environment.get(\"userId\");",
+											"    pm.expect(jsonData.id).to.eql(parseInt(storedUserId, 10));",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"validando a criação de um novo usuário\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "POST",
 					"item": [
 						{
@@ -95,7 +189,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData.email).to.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/);",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"erro de e-mail duplicado\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -144,7 +239,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData).to.have.property(\"error\", \"Email already in use\");",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"verificando o erro de dados ausentes\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -193,7 +289,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData).to.have.property(\"error\", \"Missing data\");",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"atualizando um usuário com sucesso\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -233,98 +330,6 @@
 					]
 				},
 				{
-					"name": "GET",
-					"item": [
-						{
-							"name": "validando a /users",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Response contains users\", function () {",
-											"    const jsonData = pm.response.json();",
-											"    pm.expect(jsonData).to.be.an('array');",
-											"    pm.expect(jsonData.length).to.be.above(0);",
-											"});",
-											"",
-											"const jsonData = pm.response.json();",
-											"if (jsonData.length > 0) {",
-											"    const firstUserId = jsonData[0].id;",
-											"    pm.environment.set(\"userId\", firstUserId);",
-											"    console.log(\"User ID set to: \" + firstUserId);",
-											"} else {",
-											"    console.log(\"No users available to delete.\");",
-											"}",
-											"",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/users",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get /users/{{userId}}",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"User ID matches the stored userId\", function () {",
-											"    const jsonData = pm.response.json();",
-											"    const storedUserId = pm.environment.get(\"userId\");",
-											"    pm.expect(jsonData.id).to.eql(parseInt(storedUserId, 10));",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/users/{{userId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"users",
-										"{{userId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "PUT",
 					"item": [
 						{
@@ -346,7 +351,8 @@
 											"    pm.expect(jsonData).to.have.property(\"role\", \"admin\");",
 											"    pm.expect(jsonData).to.have.property(\"is_adm\", true);",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"atualizar um usuário que não existe\");"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -396,7 +402,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData).to.have.property(\"error\", \"User not found\");",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"listando os grupos\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -448,7 +455,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData).to.have.property(\"message\", \"User deleted\");",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"null\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -472,7 +480,7 @@
 							"response": []
 						},
 						{
-							"name": "e um usuário não existente",
+							"name": "deletar um usuário não existente",
 							"event": [
 								{
 									"listen": "test",
@@ -483,7 +491,8 @@
 											"    const jsonData = pm.response.json();",
 											"    pm.expect(jsonData).to.have.property(\"error\", \"User not found\");",
 											"});",
-											""
+											"",
+											"pm.execution.setNextRequest(\"deletar um usuário com sucesso\")"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -501,6 +510,532 @@
 									"path": [
 										"users",
 										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/group",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "listando os grupos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an array\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an('array');",
+											"});",
+											"",
+											"// Armazena o primeiro ID de grupo da lista",
+											"var jsonData = pm.response.json();",
+											"if (jsonData.length > 0) {",
+											"    var groupId = jsonData[0].id; // Pega o ID do primeiro grupo",
+											"    pm.environment.set(\"group_id\", groupId); // Define a variável no ambiente",
+											"} else {",
+											"    console.error(\"Nenhum grupo disponível.\");",
+											"}",
+											"",
+											"pm.execution.setNextRequest(\"obtendo detalhes de um grupo especifico\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtendo detalhes de um grupo especifico",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Group details are correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('name');",
+											"    pm.expect(jsonData).to.have.property('description');",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"obtendo detalhes de um grupo inexistente\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/{{group_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"{{group_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtendo detalhes de um grupo inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"requisição sem o campo name\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/999999",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"999999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "requisição sem o campo name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response contains message about missing group name\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('message', 'Group name is required');",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"criando um novo grupo\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"This is a group without a name.\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/groups",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "criando um novo grupo",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera um nome de grupo aleatório",
+											"function generateRandomGroupName() {",
+											"    const adjectives = [\"Cool\", \"Awesome\", \"Dynamic\", \"Powerful\", \"Creative\"];",
+											"    const nouns = [\"Team\", \"Squad\", \"Group\", \"Club\", \"Alliance\"];",
+											"    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];",
+											"    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];",
+											"    return `${randomAdjective} ${randomNoun}`;",
+											"}",
+											"",
+											"// Gera uma descrição aleatória para o grupo",
+											"function generateRandomGroupDescription() {",
+											"    const descriptions = [",
+											"        \"A group of enthusiastic people.\",",
+											"        \"A team with a mission to innovate.\",",
+											"        \"An alliance of like-minded individuals.\",",
+											"        \"A creative club for new ideas.\",",
+											"        \"A squad of problem solvers.\"",
+											"    ];",
+											"    return descriptions[Math.floor(Math.random() * descriptions.length)];",
+											"}",
+											"",
+											"// Armazena o nome e descrição gerados em variáveis de ambiente",
+											"pm.environment.set(\"group_name\", generateRandomGroupName());",
+											"pm.environment.set(\"group_description\", generateRandomGroupDescription());",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response has group name and description\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('name', pm.environment.get(\"group_name\"));",
+											"    pm.expect(jsonData).to.have.property('description', pm.environment.get(\"group_description\"));",
+											"});",
+											"",
+											"// Armazena o ID do grupo criado para uso futuro",
+											"pm.environment.set(\"group_id\", pm.response.json().id);",
+											"",
+											"pm.execution.setNextRequest(\"Adicionar um usuario ao grupo\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{group_name}}\",\n  \"description\": \"{{group_description}}\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/groups",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar um usuario ao grupo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response body has the correct structure\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an('object');",
+											"    pm.expect(jsonData).to.have.property('id');",
+											"    pm.expect(jsonData).to.have.property('name');",
+											"    pm.expect(jsonData).to.have.property('description');",
+											"    pm.expect(jsonData).to.have.property('users');",
+											"    pm.expect(jsonData.users).to.be.an('array');",
+											"});",
+											"",
+											"pm.test(\"User is successfully added to the group\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var userExists = jsonData.users.some(user => user.id === pm.variables.get(\"userId\"));",
+											"    pm.expect(userExists).to.be.true;",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"atualizando as informações do grupo\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/{{group_id}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"{{group_id}}",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "atualizando as informações do grupo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Group is updated correctly\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.name).to.eql(\"Updated Group Name\");",
+											"    pm.expect(jsonData.description).to.eql(\"Updated Group Description\");",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"removendo um usuário de um grupo\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated Group Name\",\n  \"description\": \"Updated Group Description\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/groups/{{group_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"{{group_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "deletando um grupo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"deletar um usuário não existente\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/{{group_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"{{group_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "removendo um usuário de um grupo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Teste para verificar o código de status da resposta",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Teste para verificar a mensagem de confirmação na resposta",
+											"pm.test(\"Response message confirms removal\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('message', 'User removed from group');",
+											"});",
+											"",
+											"// Teste para garantir que o usuário foi removido do grupo",
+											"pm.test(\"User is no longer in the group\", function () {",
+											"    // Fazer uma nova requisição GET para verificar se o usuário foi removido",
+											"    pm.sendRequest({",
+											"        url: `${pm.variables.get('url')}/groups/${pm.variables.get('group_id')}`,",
+											"        method: 'GET',",
+											"        header: {",
+											"            'Content-Type': 'application/json'",
+											"        }",
+											"    }, function (err, response) {",
+											"        // Verifica se não houve erro na requisição",
+											"        pm.expect(err).to.be.null;",
+											"",
+											"        // Verifica se a resposta tem o formato esperado",
+											"        var groupData = response.json();",
+											"        pm.expect(groupData).to.have.property('users').that.is.an('array'); // Verifica se 'users' é um array",
+											"",
+											"        // Verifica se o usuário não está mais na lista de usuários do grupo",
+											"        var userExists = groupData.users.some(user => user.id === pm.variables.get('userId'));",
+											"        pm.expect(userExists).to.be.false; // O usuário deve ter sido removido",
+											"    });",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"deletando um grupo inexistente\")",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/{{group_id}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"{{group_id}}",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletando um grupo inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.execution.setNextRequest(\"deletando um grupo\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/groups/99999999999",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"groups",
+										"99999999999"
 									]
 								}
 							},

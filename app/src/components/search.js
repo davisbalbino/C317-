@@ -82,7 +82,7 @@ const Search = () => {
           ))}
         </div>
         <div className="submit">
-          <button onClick={generateJSON}>Gerar JSON</button>
+          <button onClick={generateJSON}>Submit</button>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ const Search = () => {
           <span onClick={() => addComponent("single_field")}>Campo de escolha única</span>
           <span onClick={() => addComponent("text_field")}>Campo de texto</span>
         </div>
-        <button>+</button>
+        
       </div>
     </div>
   );

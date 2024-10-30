@@ -15,7 +15,7 @@ class functions {
 
     boxCredenciaisInvalidas(){
         cy.get(elements.map('Box-credenciais-inválidas')).should('be.visible');
-        cy.get(elements.map('Box-credenciais-inválidas')).contains('Credenciais inválidas')
+        cy.get(elements.map('Box-credenciais-inválidas')).contains('Erro ao fazer a solicitação')
     }
 
     menuOption(option){

@@ -2,10 +2,9 @@ import functions from "../common/functions/common";
 const func = new functions();
 describe('Login', () => {
     beforeEach(() => {
-        func.visitPage();
+        func.visitPage('login');
     });
     it('login inválido',function(){
-        
         func.submitCredentials('fulatodetal@gmail.com', '123456');
         func.boxCredenciaisInvalidas();
     })

@@ -27,4 +27,4 @@ jobs:
           - name: Run tests
             run: |
                 cd testes/front-end/
-                npm test
+                npm run test

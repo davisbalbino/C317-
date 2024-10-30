@@ -1,25 +1,43 @@
 .search-answer-field-container {
     display: flex;
+    flex-wrap: wrap; /* Permite que os itens "quebrem" para a próxima linha */
     height: 100%;
     width: 100%;
     align-items: center;
     justify-content: space-around;
     overflow-y: auto;
+    gap:5%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
+.search-answer-field-container > * {
+    flex: 1 1 20%; /* Cada item ocupa 30% da largura, permitindo até 3 por linha */
+    max-width: 30%; /* Limita a largura máxima de cada item */
+    box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
+}
 .survey-card {
     height: 50%;
-    width: 20%;
+    width: 80%;
     border: 2px solid #41414135;
     box-shadow: 0 4px 4px 0 #41414150;
     border-radius: 8px;
     display: grid;
     grid-template-rows: auto 1fr auto; /* Título, imagem e grupo em linhas distintas */
     padding: 10px;
-    text-align: center;
+    text-align: start;
     overflow: hidden;
 }
 
+.survey-details{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+    padding:10px ;
+}
 .survey-card h3 {
     margin: 0;
     font-size: 1.2em;
@@ -46,6 +64,11 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.back-button{
+    position: absolute;
+    top: 60px;
+    left: 0;
+}
 
 .back-button:hover, .submit-button:hover {
     background-color: #0056b3;
@@ -56,4 +79,9 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     margin: 10px 0;
+    width: 70%;
+}
+.survey-card textarea {
+    min-height: 100px;
+    width: 100%;
 }

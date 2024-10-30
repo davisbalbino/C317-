@@ -1,4 +1,4 @@
-.multiple-container{
+.multiple-container,.single-choice-container,.text-field-container{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,6 +6,7 @@
     align-self: center;
     gap: 10px;
 }
+
 .search-title{
     height: 25px;
     border-radius: 8px;

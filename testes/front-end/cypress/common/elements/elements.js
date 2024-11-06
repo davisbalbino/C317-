@@ -17,6 +17,16 @@ class Elements {
             'Setor': this.placeholder('Setor'),
             'Sexo': this.name('gender'),
             'Option-admin': this.type('checkbox'),
+            'Titulo da Pesquisa': this.placeholder('Título da Pesquisa'),
+            'Grupo': this.placeholder('Grupo'),
+            'Cor': this.placeholder('Cor Tema'),
+            'Imagem': this.placeholder('Imagem'),
+            'search-options': this.class('search-options'),
+            'Pesquisa': this.class('text-field-container'),
+            'Submit': this.class('submit'),
+            'Card': this.class('survey-card'),
+            'Sua resposta': this.placeholder('Sua resposta'),
+            'Enviar Respostas': this.class('submit-button'),
         }
         return elements[id]
     }

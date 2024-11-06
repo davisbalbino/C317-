@@ -53,5 +53,25 @@ class functions {
     button(id) {
         cy.get(elements.map(id)).click();
     }
+
+    createSearch(name,group,type){
+        cy.get(elements.map('Titulo da Pesquisa')).type(name);
+        cy.get(elements.map('Grupo')).type(group);
+        cy.get(elements.map('search-options')).contains(type).click();
+    }
+
+    createQuest(question){
+        cy.get(elements.map('Pesquisa')).click();
+        cy.get(elements.map('Pesquisa')).type(question);
+    }
+
+    answerSearch(answer, question){
+        cy.get(elements.map('Menu')).contains('Pesquisas a Responder').click();
+        cy.get(elements.map('Card')).click();
+        cy.get(elements.map('Card')).contains(question).click();
+        cy.get(elements.map('Sua resposta')).click();
+        cy.get(elements.map('Sua resposta')).type(answer);
+        cy.get(elements.map('Enviar Respostas')).click();
+    }
 }
 export default functions;

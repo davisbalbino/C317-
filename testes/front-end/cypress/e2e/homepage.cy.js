@@ -15,7 +15,7 @@ describe('HomePage', () => {
         func.dashboardTitle('Pesquisas Respondidas');
     })
 
-    it.only('homepage: validando a tela de cadastro do colaborador.',function(){
+    it('homepage: validando a tela de cadastro do colaborador.',function(){
         func.menuOption('Cadastro de Colaborador');
         func.dashboardTitle('Cadastro de Colaborador');
         //nome
@@ -36,8 +36,12 @@ describe('HomePage', () => {
         func.button('Login');
     })
 
-    it('homepage: validando a tela de criar pesquisas.',function(){
+    it.only('homepage: validando a tela de criar pesquisas.',function(){
         func.menuOption('Criar Pesquisas');
         func.dashboardTitle('Criar Pesquisas');
+        func.createSearch('Pesquisa de Satisfação','TI','Campo de texto');
+        func.createQuest('Qual sua satisfação com o atendimento?');
+        func.button('Submit');
+        func.answerSearch('aaa','Qual sua satisfação com o atendimento','Satisfeito');
     })
 });

@@ -9,22 +9,23 @@ const Sign = () => {
     password: '',
     phone: '',
     sector: '',
-    gender: '', // F, M ou Outro
+    gender: '', 
     isAdmin: false
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Monta o corpo da requisição
     const requestBody = {
       name: formData.name,
       phone_number: formData.phone,
       email: formData.email,
       password: formData.password,
-      role: 'user', // ou conforme necessário
+      role: 'user', 
       is_adm: formData.isAdmin
     };
+
+
 
     try {
       const response = await fetch('https://api-c317-production.up.railway.app/users', {
@@ -37,26 +38,28 @@ const Sign = () => {
 
       if (response.ok) {
         const data = await response.json();
-        alert('Usuário cadastrado com sucesso:', data);
+        alert('Usuário cadastrado com sucesso', data);
       } else {
-        alert('Erro ao cadastrar usuário:', response.statusText);
+        alert('Erro ao cadastrar usuário', response.statusText);
       }
     } catch (error) {
       alert('Erro na requisição:', error);
     }
     try {
-      const response = await fetch('https://api-c317-production.up.railway.app/users', {
-        method: 'GET',
+      const response = await fetch('https://api-c317-production.up.railway.app/groups', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({
+          "name": formData.sector,
+          "description": "sector"
+      })
       });
 
       if (response.ok) {
         const data = await response.json();
-        alert('Usuário cadastrado com sucesso:', data);
       } else {
-        alert('Erro ao cadastrar usuário:', response.statusText);
       }
     } catch (error) {
       alert('Erro na requisição:', error);
@@ -135,7 +138,7 @@ const Sign = () => {
         />
         Admin
       </label>
-      <ButtonSubmit label='Cadsatrar' onClick={handleSubmit} />
+      <ButtonSubmit label='Cadastrar' onClick={handleSubmit} />
     </div>
     
   );

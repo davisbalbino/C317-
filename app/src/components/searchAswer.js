@@ -8,47 +8,64 @@ const SearchAnswer = () => {
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    const storedSurveys = JSON.parse(localStorage.getItem("surveyDataList")) || [];
-    setSurveys(storedSurveys);
+    try {
+      const storedSurveys = JSON.parse(localStorage.getItem("surveyDataList")) || [];
+      setSurveys(storedSurveys);
+    } catch (error) {
+      console.error("Erro ao carregar as pesquisas do localStorage:", error);
+    }
   }, []);
 
   const handleAnswerChange = (questionTitle, answer, isMultiple = false) => {
     setAnswers((prevAnswers) => {
       const previousAnswer = prevAnswers[questionTitle] || (isMultiple ? [] : "");
-      
       if (isMultiple) {
         const updatedAnswers = previousAnswer.includes(answer)
-          ? previousAnswer.filter((ans) => ans !== answer) // Remove resposta se já selecionada
-          : [...previousAnswer, answer]; // Adiciona nova resposta
-        return {
-          ...prevAnswers,
-          [questionTitle]: updatedAnswers,
-        };
+          ? previousAnswer.filter((ans) => ans !== answer)
+          : [...previousAnswer, answer];
+        return { ...prevAnswers, [questionTitle]: updatedAnswers };
       } else {
-        return {
-          ...prevAnswers,
-          [questionTitle]: answer,
-        };
+        return { ...prevAnswers, [questionTitle]: answer };
       }
     });
   };
 
   const handleSubmit = () => {
-    if (selectedSurvey) {
+    if (selectedSurvey && Object.keys(answers).length > 0) {
       const response = {
         title: selectedSurvey.title,
-        answers: answers,
+        answers,
         email: 'davi@inatel.br', 
         name: 'Davi Balbino'
       };
 
-      const storedResponses = JSON.parse(localStorage.getItem("surveyResponses")) || [];
-      storedResponses.push(response);
-      localStorage.setItem("surveyResponses", JSON.stringify(storedResponses));
-      console.log('respostas', storedResponses)
-      alert("Respostas salvas com sucesso!");
-      setSelectedSurvey(null);
-      setAnswers({});
+      // Log para verificar as respostas antes de salvar
+      console.log("Respostas que serão salvas:", response);
+
+      try {
+        // Salva a resposta no localStorage na chave 'surveyResponses'
+        const storedResponses = JSON.parse(localStorage.getItem("surveyResponses")) || [];
+        storedResponses.push(response);
+        localStorage.setItem("surveyResponses", JSON.stringify(storedResponses));
+
+        // Move a pesquisa para a chave 'answeredSurveys'
+        const answeredSurveys = JSON.parse(localStorage.getItem("answeredSurveys")) || [];
+        answeredSurveys.push(selectedSurvey);
+        localStorage.setItem("answeredSurveys", JSON.stringify(answeredSurveys));
+
+        // Remove a pesquisa respondida do localStorage de `surveyDataList`
+        const remainingSurveys = surveys.filter((survey) => survey.title !== selectedSurvey.title);
+        localStorage.setItem("surveyDataList", JSON.stringify(remainingSurveys));
+        setSurveys(remainingSurveys);
+
+        alert("Respostas salvas com sucesso!");
+        setSelectedSurvey(null);
+        setAnswers({});
+      } catch (error) {
+        console.error("Erro ao salvar a resposta:", error);
+      }
+    } else {
+      alert("Por favor, responda todas as perguntas antes de enviar.");
     }
   };
 
@@ -77,7 +94,8 @@ const SearchAnswer = () => {
                   <input 
                     type="checkbox" 
                     value={option} 
-                    onChange={(e) => handleAnswerChange(component.title, option, true)} 
+                    checked={answers[component.title]?.includes(option) || false}
+                    onChange={() => handleAnswerChange(component.title, option, true)} 
                   />
                   <label>{option}</label>
                 </div>
@@ -88,6 +106,7 @@ const SearchAnswer = () => {
                     type="radio" 
                     name={component.title} 
                     value={option} 
+                    checked={answers[component.title] === option}
                     onChange={() => handleAnswerChange(component.title, option)} 
                   />
                   <label>{option}</label>
@@ -96,6 +115,7 @@ const SearchAnswer = () => {
               {component.type === "text_field" && (
                 <textarea 
                   placeholder="Sua resposta" 
+                  value={answers[component.title] || ""}
                   onChange={(e) => handleAnswerChange(component.title, e.target.value)} 
                 />
               )}

@@ -49,13 +49,8 @@ const Search = () => {
         <div className="search-info-card">
           <input placeholder="Título da Pesquisa" onChange={(e) => setTitle(e.target.value)} />
           <input placeholder="Grupo" onChange={(e) => setGroup(e.target.value)} />
-          <input 
-            placeholder="Cor Tema" 
-            type="color" 
-            value={color} 
-            onChange={handleColorChange}
-          />
-          <input placeholder="Imagem" onChange={(e) => setImage(e.target.value)} />
+         
+          
         </div>
       </div>
 

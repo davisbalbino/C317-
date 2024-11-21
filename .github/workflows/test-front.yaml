@@ -34,7 +34,7 @@ jobs:
     - name: Generate Allure report
       run: |
         cd testes/front-end/
-        npm run report:allure
+        npm run test:allure
 
     - name: Upload Allure report
       uses: actions/upload-artifact@v3

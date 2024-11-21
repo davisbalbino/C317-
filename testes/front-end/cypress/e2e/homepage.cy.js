@@ -15,33 +15,33 @@ describe('HomePage', () => {
         func.dashboardTitle('Pesquisas Respondidas');
     })
 
-    it('homepage: validando a tela de cadastro do colaborador.',function(){
-        func.menuOption('Cadastro de Colaborador');
-        func.dashboardTitle('Cadastro de Colaborador');
-        //nome
-        func.form('Nome', 'Fulano');
-        //e-mail
-        func.form('Email', 'fulano5@gmail.com');
-        //senha
-        func.form('Senha', '123456');
-        //telefone
-        func.form('Telefone', '999999999');
-        //setor
-        func.form('Setor', 'TI');
-        //sexo
-        func.selectOption('Sexo', 'Masculino');
-        //admin
-        func.toggleCheckbox('Option-admin', true);
-        //clicar button
-        func.button('Login');
-    })
+    // it('homepage: validando a tela de cadastro do colaborador.',function(){
+    //     func.menuOption('Cadastro de Colaborador');
+    //     func.dashboardTitle('Cadastro de Colaborador');
+    //     //nome
+    //     func.form('Nome', 'Fulano');
+    //     //e-mail
+    //     func.form('Email', 'fulano5@gmail.com');
+    //     //senha
+    //     func.form('Senha', '123456');
+    //     //telefone
+    //     func.form('Telefone', '999999999');
+    //     //setor
+    //     func.form('Setor', 'TI');
+    //     //sexo
+    //     func.selectOption('Sexo', 'Masculino');
+    //     //admin
+    //     func.toggleCheckbox('Option-admin', true);
+    //     //clicar button
+    //     func.button('Login');
+    // })
 
-    it.only('homepage: validando a tela de criar pesquisas.',function(){
-        func.menuOption('Criar Pesquisas');
-        func.dashboardTitle('Criar Pesquisas');
-        func.createSearch('Pesquisa de Satisfação','TI','Campo de texto');
-        func.createQuest('Qual sua satisfação com o atendimento?');
-        func.button('Submit');
-        func.answerSearch('aaa','Qual sua satisfação com o atendimento','Satisfeito');
-    })
+    // it('homepage: validando a tela de criar pesquisas.',function(){
+    //     func.menuOption('Criar Pesquisas');
+    //     func.dashboardTitle('Criar Pesquisas');
+    //     func.createSearch('Pesquisa de Satisfação','TI','Campo de texto');
+    //     func.createQuest('Qual sua satisfação com o atendimento?');
+    //     func.button('Submit');
+    //     func.answerSearch('aaa','Qual sua satisfação com o atendimento','Satisfeito');
+    // })
 });

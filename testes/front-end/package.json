@@ -4,17 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run",
-    "e2e": "cypress run --env allure=true",
-    "report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report",
-    "test:allure": "npm run e2e && npm run report:allure"
+    "test": "cypress run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@shelex/cypress-allure-plugin": "^2.40.2",
-    "allure-cypress": "^3.0.6",
     "cypress": "^13.15.0"
   },
   "dependencies": {

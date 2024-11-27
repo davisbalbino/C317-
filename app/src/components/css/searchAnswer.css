@@ -22,11 +22,13 @@
     border: 2px solid #41414135;
     box-shadow: 0 4px 4px 0 #41414150;
     border-radius: 8px;
-    display: grid;
-    grid-template-rows: auto 1fr auto; /* Título, imagem e grupo em linhas distintas */
+    display: flex;
+    align-items: start;
+    justify-content: space-around;
     padding: 10px;
     text-align: start;
     overflow: hidden;
+    flex-direction: column;
 }
 
 .survey-details{
@@ -38,9 +40,14 @@
     gap: 10px;
     padding:10px ;
 }
-.survey-card h3 {
+.survey-card h4 {
+    border-bottom: 1px solid #414141;
     margin: 0;
     font-size: 1.2em;
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: #414141
 }
 
 .survey-image {
@@ -95,4 +102,15 @@
     border-radius: 8px;
     box-shadow: 0 2px 2px 0 ;
     padding-left: 8px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.answer-card h4{
+    border-bottom: 1px solid #414141;
+    margin: 0;
+    font-size: 1.2em;
+    width: 95%;
+    text-align: center;
+    text-transform: capitalize;
+    color: #414141
 }

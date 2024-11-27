@@ -13,7 +13,7 @@ const Login = () => {
   const Swal = require("sweetalert2");
 
   const userTeste = {
-    email: "useradmin@user.com",
+    email: "user@user.com",
     password: "senha1234!",
     name: "user",
     is_adm: true,
@@ -29,6 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+   
     try {
       const response = await fetch(
         "https://api-c317-production.up.railway.app/users",
@@ -41,12 +42,16 @@ const Login = () => {
       );
 
       if (response.ok) {
+         console.log('entrei aqui if')
         let data = await response.json();
         data = data.filter((item) => item.email == email);
+        console.log(data)
 
         if (data.length > 0) {
+           console.log('entrei aqui if if')
           navigate("/homepage", { state: { user: data[0] } });
         } else {
+           console.log('entrei aqui if else')
           Swal.fire({
             position: "top-end",
             icon: "error",
@@ -56,12 +61,13 @@ const Login = () => {
           });
         }
       } else {
+         console.log('entrei aqui else')
         if (email === userTeste.email && password === userTeste.password) {
-          console.log('entrei aqui')
+          console.log('entrei aqui else if')
           navigate("/homepage", { state: { user: userTeste } });
           return
         } else  if (email === userTesteNotAdmin.email && password === userTesteNotAdmin.password) {
-          console.log('entrei aqui')
+          console.log('entrei aqui else if else ')
           navigate("/homepage", { state: { user: userTesteNotAdmin } });
           return
         }
@@ -76,14 +82,7 @@ const Login = () => {
         navigate("/homepage", { state: { user: userTesteNotAdmin } });
         return
       } 
-      alert("Erro na requisição:", error);
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Erro ao fazer a solicitação",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      
     }
     if (email === userTeste.email && password === userTeste.password) {
       navigate("/homepage");

@@ -4,6 +4,8 @@ import MultipleChoice from './multipleChoice';
 import SingleChoice from './singleChoice';
 import TextField from './textField';
 
+const Swal = require("sweetalert2");
+
 const Search = () => {
   const [color, setColor] = useState("#FFF");
   const [components, setComponents] = useState([]);
@@ -39,8 +41,14 @@ const Search = () => {
     const updatedData = [...existingData, surveyData];
   
     localStorage.setItem("surveyDataList", JSON.stringify(updatedData));
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Pesquisa Cadastrada com sucesso",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     
-    console.log("Dados atualizados e salvos no localStorage:", updatedData);
   };
 
   return (

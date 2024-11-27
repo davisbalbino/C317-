@@ -1,32 +1,32 @@
 name: Test Frontend
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-          - name: Set up Node.js
-            uses: actions/setup-node@v2
-            with:
-                node-version: '14'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-          - name: Install dependencies
-            run: |
-                cd testes/front-end/
-                npm install
+    - name: Install dependencies
+      run: |
+        cd testes/front-end/
+        npm install
 
-          - name: Run tests
-            run: |
-                cd testes/front-end/
-                npm run test
+    - name: Run tests
+      run: |
+        cd testes/front-end/
+        npm run test

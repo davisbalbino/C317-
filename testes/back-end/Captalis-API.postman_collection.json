@@ -190,56 +190,6 @@
 											"    pm.expect(jsonData.email).to.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/);",
 											"});",
 											"",
-											"pm.execution.setNextRequest(\"erro de e-mail duplicado\")"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{name}}\",\n    \"phone_number\": \"{{phone_number}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\",\n    \"is_adm\": {{is_adm}}\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/users",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "erro de e-mail duplicado",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Should return error when email is already in use\", function () {",
-											"    pm.response.to.have.status(400);",
-											"    const jsonData = pm.response.json();",
-											"    pm.expect(jsonData).to.have.property(\"error\", \"Email already in use\");",
-											"});",
-											"",
 											"pm.execution.setNextRequest(\"verificando o erro de dados ausentes\")"
 										],
 										"type": "text/javascript",
@@ -258,7 +208,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"User One\",\n    \"phone_number\": \"+123456789\",\n    \"email\": \"duplicate@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"user\",\n    \"is_adm\": false\n}\n",
+									"raw": "{\n    \"name\": \"{{name}}\",\n    \"phone_number\": \"{{phone_number}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"role\": \"{{role}}\",\n    \"is_adm\": {{is_adm}}\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"

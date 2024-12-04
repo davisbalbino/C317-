@@ -1,17 +1,38 @@
-.sign-container{
-    overflow-y: auto;
-    height: 100%;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+@media(max-width: 767px) {
+    .sign-container{
+        overflow-y: auto;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .info{
+        height: 8%;
+        border-radius: 20px;
+        border: 2px #d9d9d9 solid;
+        width: 80%;
+        text-align: center;
+        box-shadow: 0px 4px 4px 0 rgba(0,0,0,0.5);
+    }
 }
-.info{
-    height: 8%;
-    border-radius: 20px;
-    border: 2px #d9d9d9 solid;
-    width: 80%;
-    text-align: center;
-    box-shadow: 0px 4px 4px 0 rgba(0,0,0,0.5);
+@media(min-width: 768px) {
+    .sign-container{
+        overflow-y: auto;
+        height: 100%;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .info{
+        height: 8%;
+        border-radius: 20px;
+        border: 2px #d9d9d9 solid;
+        width: 80%;
+        text-align: center;
+        box-shadow: 0px 4px 4px 0 rgba(0,0,0,0.5);
+    }
 }

@@ -25,11 +25,9 @@ const Login = () => {
     is_adm: false,
   };
 
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-   
     try {
       const response = await fetch(
         "https://api-c317-production.up.railway.app/users",
@@ -42,50 +40,56 @@ const Login = () => {
       );
 
       if (response.ok) {
-         console.log('entrei aqui if')
+        console.log("entrei aqui if");
         let data = await response.json();
         data = data.filter((item) => item.email == email);
-        console.log(data)
+        console.log(data);
 
         if (data.length > 0) {
-           console.log('entrei aqui if if')
+          console.log("entrei aqui if if");
           navigate("/homepage", { state: { user: data[0] } });
         } else {
-           console.log('entrei aqui if else')
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Credenciais inválidas",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (email === userTeste.email && password === userTeste.password) {
+            navigate("/homepage",{ state: { user: userTeste } } );
+          } else {
+            console.log("entrei aqui if else");
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Credenciais inválidas",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         }
       } else {
-         console.log('entrei aqui else')
+        console.log("entrei aqui else");
         if (email === userTeste.email && password === userTeste.password) {
-          console.log('entrei aqui else if')
+          console.log("entrei aqui else if");
           navigate("/homepage", { state: { user: userTeste } });
-          return
-        } else  if (email === userTesteNotAdmin.email && password === userTesteNotAdmin.password) {
-          console.log('entrei aqui else if else ')
+          return;
+        } else if (
+          email === userTesteNotAdmin.email &&
+          password === userTesteNotAdmin.password
+        ) {
+          console.log("entrei aqui else if else ");
           navigate("/homepage", { state: { user: userTesteNotAdmin } });
-          return
+          return;
         }
       }
     } catch (error) {
       if (email === userTeste.email && password === userTeste.password) {
-        console.log('entrei aqui')
+        console.log("entrei aqui");
         navigate("/homepage", { state: { user: userTeste } });
-        return
-      } else if (email === userTesteNotAdmin.email && password === userTesteNotAdmin.password) {
-        console.log('entrei aqui')
+        return;
+      } else if (
+        email === userTesteNotAdmin.email &&
+        password === userTesteNotAdmin.password
+      ) {
+        console.log("entrei aqui");
         navigate("/homepage", { state: { user: userTesteNotAdmin } });
-        return
-      } 
-      
-    }
-    if (email === userTeste.email && password === userTeste.password) {
-      navigate("/homepage");
+        return;
+      }
     }
   };
 

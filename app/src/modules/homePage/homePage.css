@@ -1,3 +1,26 @@
+
+@media(max-width: 768px) {
+
+    .home-container{
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .home-content{
+        position: absolute;
+        top: 11vh;
+        left: 0;
+        height: 86%;
+        width:100%;
+        border-radius: 20px;
+        margin: 1%;
+        border: 1px solid #D6d6d6;
+        box-shadow: 0 4px 4px 4px #d6d6d6;
+    }
+    }
+@media(min-width: 767px) {
+
 .home-container{
     height: 100vh;
     width: 100%;
@@ -14,4 +37,5 @@
     margin: 1%;
     border: 1px solid #D6d6d6;
     box-shadow: 0 4px 4px 4px #d6d6d6;
+}
 }
